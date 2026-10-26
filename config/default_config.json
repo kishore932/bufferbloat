@@ -1,0 +1,74 @@
+{
+  "project": "BufferBloat Detection and Queue Management Optimization Using NS-3",
+  "version": "1.0.0",
+  "default_experiment": {
+    "nClients": 3,
+    "bottleneckBw": 5.0,
+    "bottleneckDelay": 35.0,
+    "accessBw": 100.0,
+    "accessDelay": 2.0,
+    "queueType": "DropTail",
+    "queueSize": 100,
+    "trafficLoad": "high",
+    "packetSize": 1024,
+    "simDuration": 15.0,
+    "rngRun": 1
+  },
+  "presets": {
+    "textbook_bloat": {
+      "name": "Textbook DropTail BufferBloat",
+      "description": "Large 100-packet FIFO queue on a 5 Mbps bottleneck link. Causes severe queue latency buildup (BufferBloat) under high TCP load.",
+      "queueType": "DropTail",
+      "queueSize": 100,
+      "bottleneckBw": 5.0,
+      "bottleneckDelay": 35.0,
+      "accessBw": 100.0,
+      "trafficLoad": "high",
+      "simDuration": 15.0
+    },
+    "codel_mitigation": {
+      "name": "CoDel Controlled Delay AQM",
+      "description": "CoDel automatically manages queue delay with a 5ms target and 100ms interval, dropping packets only when standing queue persists.",
+      "queueType": "CoDel",
+      "queueSize": 100,
+      "bottleneckBw": 5.0,
+      "bottleneckDelay": 35.0,
+      "accessBw": 100.0,
+      "trafficLoad": "high",
+      "simDuration": 15.0
+    },
+    "fq_codel_fairness": {
+      "name": "FQ-CoDel Fair Queueing + CoDel",
+      "description": "Combines CoDel with flow isolation. Heavy bulk flows are queued separately while low-rate interactive ping probes experience zero bloat.",
+      "queueType": "FqCoDel",
+      "queueSize": 100,
+      "bottleneckBw": 5.0,
+      "bottleneckDelay": 35.0,
+      "accessBw": 100.0,
+      "trafficLoad": "high",
+      "simDuration": 15.0
+    },
+    "red_aqm": {
+      "name": "RED (Random Early Detection)",
+      "description": "Classic active queue management that drops packets probabilistically based on average queue size (minTh=20p, maxTh=80p).",
+      "queueType": "RED",
+      "queueSize": 100,
+      "bottleneckBw": 5.0,
+      "bottleneckDelay": 35.0,
+      "accessBw": 100.0,
+      "trafficLoad": "high",
+      "simDuration": 15.0
+    },
+    "small_buffer": {
+      "name": "Small FIFO Buffer (No Bloat, High Drop)",
+      "description": "Small 15-packet FIFO buffer. Prevents BufferBloat latency buildup but causes higher packet drop rates and potential TCP throughput collapse.",
+      "queueType": "DropTail",
+      "queueSize": 15,
+      "bottleneckBw": 5.0,
+      "bottleneckDelay": 35.0,
+      "accessBw": 100.0,
+      "trafficLoad": "high",
+      "simDuration": 15.0
+    }
+  }
+}
